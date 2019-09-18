@@ -1,0 +1,271 @@
+.post{
+	width: 100%;
+	height: 350px;
+	/*border:1px solid red;*/
+    /*border-bottom: 1px solid #b39c9c;*/
+    border-top: 1px solid #fff;
+    margin-bottom: 10%;
+}
+.title{
+	width: 100%;
+	height: 60px;
+    margin-top: 15px;
+    display: flex;
+   /* overflow: hidden;*/
+
+
+}
+.pic{
+    width: 46px;
+    height: 46px;
+    
+    margin-left: 10%;
+    padding-right: 15px;
+}
+.logo{
+	width: 100%;
+	height: 100%;
+    
+}
+.tip{
+    width: 60%;
+    height: 100%;
+}
+.name{
+    width: 100%;
+    height: 50%;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.Name{
+    /*width: 42px;
+      height: 20px;*/
+      font-family: PingFangSC-Regular;
+      font-size: 14px;
+      font-weight: 600;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #333333;
+}
+.time{
+	width: 100%;
+    height: 50%;
+    font-size: 16px;
+    color: #999999;
+}
+.Time{
+    
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}
+.con{
+    width: 80%;
+    height: 50px;
+    overflow: hidden;
+    margin-left: 10%;
+    font-size: 16px;
+    color: #333;
+}
+.conPic{
+    width: 80%;
+    height: 150px;
+    margin-left: 10%;
+}
+.dtos{
+    width: 80%;
+    margin-left: 10%;
+    border-bottom: 0px solid #b39c9c;
+    height: 50px;
+    display: flex;
+    margin-top: 10px;
+   
+}
+.dto{
+	width: 33%;
+    height: 100%;
+    text-align: center;
+    margin-top: 5%;
+    font-size: 18px;
+    color: #333;
+}
+.fiter{
+    width: 100%;
+    height: 40px;   
+   display: flex; 
+    margin-bottom: 15px;
+   /* margin-left: 30%*/
+}
+.Box{
+    display: -webkit-flex;  /* 新版本语法: Chrome 21+ */
+    display: flex;
+    display: -webkit-box;   /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;      /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;  
+}
+.flex1{
+     -webkit-flex: 1;        /* Chrome */  
+    -ms-flex: 1 ;            /* IE 10 */  
+    flex: 1;                /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    -webkit-box-flex: 1 ;    /* OLD - iOS 6-, Safari 3.1-6 */  
+    -moz-box-flex: 1; 
+}
+.home{
+   /* width: 30%;*/
+   /* height: 100%;*/
+   /* text-align: center;*/
+   /* font-size: 20px;*/
+    /*margin-left: 37%;*/
+    color: #ffd000;
+    border-bottom:1px solid ;
+
+}
+
+.Home{
+    
+  font-family: PingFangSC-Regular;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffd000;
+
+}
+.attention{
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 20px;
+    margin-left: 20%;
+
+}
+.atten{
+     margin-left: 37%;
+}
+.boxs{
+     display:inline-block;
+    display:-moz-box;
+    -moz-box-orient:horizontal;
+    display:-webkit-box;
+    -webkit-box-orient:horizontal;
+    display:box;
+    box-orient:horizontal;
+}
+.box{
+    height: 30px;
+    line-height: 30px;
+    -webkit-box-flex: 1.0;
+    -moz-box-flex:1.0;
+     box-flex:1.0
+}
+.infinite-scroll-preloader {
+  margin-top:-20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.infinite-scroll-preloader .preloader {
+  width:34px;
+  height:34px;
+}
+.am-list-view-scrollview{
+    height: 100%;
+    overflow:hidden;
+}
+.titlename{
+    
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+
+.am-modal-mask{
+  z-index:10;
+}
+.am-modal-popup-slide-up{
+  bottom: 60px;
+}
+.mysendpost{
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+.mysendpostAfter{
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}
+.sendSubject{
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}
+/*input{
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}*/
+ .am-list-item .am-input-control input{
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+} 
+.am-textarea-control textarea{
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}
+.re{
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  
+  letter-spacing: normal;
+  color: #333333;
+}

@@ -1,0 +1,22 @@
+.back {
+    background-image: url('./fanhui-grey.png');
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    background-position: 10px 5px;
+
+}
+.close {
+    background-image: url('./guanbi-grey.png');
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: 15px 12px;
+
+}
+.back:hover {
+    background-image: url('./fanhui.png');
+}
+
+.close:hover {
+    background-image: url('./guanbi.png');
+}
+

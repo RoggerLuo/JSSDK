@@ -1,0 +1,81 @@
+.textrules{
+	 white-space:nowrap;
+	 text-overflow:ellipsis;
+	 overflow:hidden;
+}
+.messavatar{
+    width: 32px;
+    height: 32px;
+}
+.messagelogo{
+	border-radius: 50%
+}
+.messcon{
+    font-family: PingFangSC-Regular;
+    font-size: 12px;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffd100;
+    margin-bottom:6px;
+}
+.messtag{
+	width: 24%;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    border-radius: 5px;
+    margin-top: 7px;
+    margin-left: 5%;
+    background: #ffe300;
+    cursor: pointer;
+    color: #fff;
+}
+.noread{
+    
+font-family: PingFangSC-Regular;
+  font-size: 10px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+.readcon{
+    font-family: PingFangSC-Regular;
+    font-size: 12px !important;
+    font-weight: 600;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #333333;
+}
+.readtag{
+    opacity: 0.5;
+  font-family: PingFangSC-Regular;
+  font-size: 10px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}
+.isread{
+    border-radius: 8px;
+    background-color: #f4f4f4;
+    padding: 2px 6px;
+}
+.unread{
+    padding:2px 6px;
+    border-radius: 8px;
+    background-color: #ffd100;
+}
+html:not([data-scale]) .am-list-body::before{
+  position:static;
+}

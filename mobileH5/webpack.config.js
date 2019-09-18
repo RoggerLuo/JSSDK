@@ -1,0 +1,12 @@
+const path = require('path')
+const projectRoot = path.resolve(__dirname, '../')
+const dev = require('./webpack/dev.js')
+
+// module.exports = dev('subscription')
+// module.exports = dev('subAuthor')
+// module.exports = dev('myUpload')
+// module.exports = dev('detail-share')
+// module.exports = dev('myFavorite')
+// module.exports = dev('subAuthor')
+module.exports = dev('rollcall')
+// module.exports = dev('myFollow')

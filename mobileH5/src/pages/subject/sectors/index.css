@@ -1,0 +1,76 @@
+/*.sectorsWrap{
+	width: 100%;
+	border-bottom:1px solid #b39c9c;
+	margin-left: 5%;
+}*/
+.sectors{
+	width: 90%;
+	border-bottom:1px solid #b39c9c;
+	margin-left: 5%;
+	height: 130px;
+	
+}
+.sector{
+	width: 90%;
+	height: 140px;
+	display: flex;
+	padding-top: 20px;
+	margin-left: 5%;
+}
+.logopic{
+    width: 38%;
+    height: 58%;
+}
+.logos{
+	width: 100%;
+	height: 100%;
+}
+.sectorCon{
+	width: 40%;
+	height: 100%;
+	margin-left: 10px;
+}
+.sectorname{
+    width: 100%;
+    height: 35%;
+    font-size: 20px;
+    color: #333333;
+}
+.sectorpopular{
+	width: 100%;
+    height: 50%;
+    font-size: 16px;
+    color: #333333;
+}
+.manages{
+	width: 18%;
+    height: 50%;
+    margin-top: 50px;
+}
+.button{
+	margin-bottom: 50%;
+}
+.subjectname{
+	width: auto;
+  height: 20px;
+  font-family: PingFangSC;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+.subjectpopular{
+	width: auto;
+  height: 17px;
+  font-family: PingFangSC;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}

@@ -1,0 +1,62 @@
+.sector-wrap{
+	width: 100%;
+	height: 150px;
+	border-top:1px solid #000;
+	background: #ffffff;
+}
+.sector-ul{
+	width: 100%;
+	height: 100%;
+	list-style: none;
+	padding-left: 20px;
+}
+.sector-li{
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+.sector-li-left{
+	width: 30%;
+	height: 60%;
+	
+	margin-right: 15px;
+}
+.sector-li-right{
+	width: 60%;
+	height: 60%;
+    
+}
+.sector-logo{
+	width: 100%;
+	height: 100%;
+}
+.sector-con{
+	width: 100%;
+	height: 100%;
+}
+.sector-con-title{
+	font-size: 18px;
+}
+.sector-com-people{
+	font-size: 16px;
+}
+.sector-ad{
+	width: 20%;
+	height: 60%;
+    padding-right: 15px;
+}
+.sector-ad-button{
+    width: 84%;
+    height: 33%;
+    margin-top: 100%;
+}
+.sector-bottom{
+	width: 100%;
+	height: 1px;
+	background: red;
+}
+
+
+.swit{
+            margin-top: 25px;
+        }

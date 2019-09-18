@@ -1,0 +1,61 @@
+@import url('~assets/style/var.less');
+@import url('~assets/style/icon.less');
+/* 
+  border: 1px solid @color-border;
+ */
+.search{
+  width: 320px;
+  height: 36px;
+  display: flex;
+  border-radius: @radius-common;
+  box-sizing: border-box;
+  position: relative;
+  &:hover{
+    .searchReset{
+      display: block;
+    }
+  }
+  &Reset{
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: none;
+    background-image: url('../../assets/images/delete.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 9px;
+    right: 45px;
+    z-index: 1;
+    cursor: pointer;
+    display: none;
+    &:focus, &:active {
+      outline: none;
+      border: none;
+    }
+  }
+  .input{
+    flex: 1;
+    height: 100%;
+    padding: 10px;
+    border-radius: @radius-common;
+    box-sizing: border-box;
+    border: none;
+  }
+  .icon{
+    .icon-search;
+    width: 36px;
+    height: 100%;
+    border-left: 1px solid @color-border;
+    border-top-right-radius: @radius-common;
+    border-bottom-right-radius: @radius-common;
+    box-sizing: border-box;
+    background-color: #f8f9ff;
+    background-size: 14px;
+    cursor: pointer;
+  }
+  .enter{
+  background:#f00;
+  }
+}

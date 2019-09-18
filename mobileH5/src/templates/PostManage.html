@@ -1,0 +1,25 @@
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="link icon-only back">
+                <img src="back.png" style="height: 20px;"/>
+            </a>
+        </div>
+        <div class="center sliding">帖子管理</div>
+         <div class="right" >
+                        <a href="#" class="open-send-popup link icon-only">
+                        <img src="search.png" style="height: 25px;" onclick="window.mainView.router.load({
+                            url: 'checkpostSelect.html',
+                            })"/>
+                        <i class="icon ios7-compose-outline" style="display: none"></i>
+                    </a>
+          </div>
+    </div>
+
+</div>
+
+<div class="pages navbar-through">
+    <div data-page="post" class="page no-toolbar">
+        <div class="post" style="height:100%;background: #ffffff;overflow: auto;"></div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        "stage-3",
+        "react"
+    ],
+    "plugins": [
+        "transform-regenerator",
+        "transform-class-properties",
+        "@babel/plugin-transform-async-to-generator",
+        ["import", { "libraryName": "antd-mobile", "style": "css" }] 
+    ]
+}

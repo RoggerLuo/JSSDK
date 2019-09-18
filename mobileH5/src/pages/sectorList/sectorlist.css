@@ -1,0 +1,51 @@
+.ReplyAll{
+	border-bottom:1px solid #b39c9c;
+	
+}
+/*.sectorpost{
+	font-size:20px;
+	text-align:center;
+	width:16%;
+}*/
+.all{
+	font-size:20px;
+	text-align:center;
+	width:16%;
+}
+.elite{
+	margin-left:5px;
+	font-size:20px;
+	text-align:center;
+	width:16%;
+}
+.Stick{
+	width: 80%;
+	margin-left: 10%;
+	border-bottom:1px solid #b39c9c;
+}
+.stickPost{
+   width: 80%;
+    text-align: left;
+    margin-left: 3%;
+}
+.peak{
+	margin-top: 2px;
+	height: 30px;
+}
+.sectorlistPic{
+	height: 80px;
+	width: 80px;
+}
+.sectorlistLogo{
+	border-radius: 50%;
+}
+.sectorwrap{
+	width: 90%;
+	height: 140px;
+	display: flex;
+	padding-top: 20px;
+	margin-left: 5%;
+}
+html:not([data-scale]) .am-list-body::before{
+	position:static;
+}

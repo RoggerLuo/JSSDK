@@ -1,0 +1,83 @@
+.popus{
+	width: 50px;
+	height: 50px;
+	margin-top:85px;
+	margin-left: 15%;
+}
+
+
+/*selectSector样式*/
+.single-multi-foo-menu {
+  position: absolute;
+  z-index: 70 !important;
+  width: 100%;
+}
+
+.single-multi-menu-active .single-multi-top-nav-bar{
+  z-index: 80;
+}
+
+.single-multi-top-nav-bar {
+  position: relative;
+  background-color: #008AE6;
+  color: #FFF;
+}
+.am-navbar-title {
+  color: #FFF!important;
+}
+.menu-mask {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.4;
+  z-index: 69;
+}
+/* .am-list-item{
+  bottom: 40px;
+} */
+.am-modal-content{
+  border-radius: 20px;
+  bottom: -20px;
+}
+.sendText{
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+.list-block ul:before{
+  background-color: #ffffff;
+}
+.list-block ul:after{
+  background-color: #f6f6f6;
+}
+.subjectnames{
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #333333;
+}
+.item-after{
+  font-family: PingFangSC-Regular;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #999999;
+}
+.am-input-control input{
+  color:#333333;
+}
