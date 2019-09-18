@@ -5,9 +5,11 @@ const path = require('path'); //文件路径模块
 const sha1 = require('node-sha1'); //加密模块
 const urlencode= require('urlencode'); //URL编译模块
 
+var cache = require('memory-cache')
+
 
 const hostName = '0.0.0.0'; //ip或域名
-const port = 8090; //端口
+const port = 8091; //端口
 
 const app = express()
 /**
@@ -170,7 +172,7 @@ app.get('/getsign', function (req, res) {
         };
         res.send(obj)
     } else {
-        request('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=appid&secret=secret', function (error, response, body) {
+        request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var tokenMap = JSON.parse(body);
                 request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + tokenMap.access_token + '&type=jsapi', function (error, resp, json) {
