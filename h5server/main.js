@@ -194,10 +194,10 @@ app.get('/getsign', async function  (req, res)  {
 app.get('/getImg', async function  (req, res)  {
     const id = req.query.id; //获取微信发送请求参数signature
     const access_token = await getToken()        
-
+    console.log('id是',id)
     var src = `https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${id}`
     
-    var writeStream = fs.createWriteStream('id.png');
+    var writeStream = fs.createWriteStream(`images/${id}.png`);
     var readStream = request(src)
     readStream.pipe(writeStream);
     readStream.on('end', function() {
@@ -210,6 +210,7 @@ app.get('/getImg', async function  (req, res)  {
         console.log("文件写入成功");
         writeStream.end();
     });
+    res.send('ok')
 
 })
 
