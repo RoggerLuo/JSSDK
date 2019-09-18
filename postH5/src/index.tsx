@@ -16,7 +16,7 @@ fetch("http://106.54.113.111:8091/getSign")
     console.log(res)
     wx.config({
         debug: true, // 开启调试模式
-        appId: "你的appid", // 必填，公众号的唯一标识
+        appId: "wxc0f44270eeb7045a", // 必填，公众号的唯一标识
         timestamp: res.timestamp, // 必填，生成签名的时间戳
         nonceStr: res.noncestr, // 必填，生成签名的随机串
         signature: res.signature,// 必填，签名，见附录1
