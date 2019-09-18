@@ -1,62 +1,39 @@
-const express = require('express'); //web服务框架模块
-const request = require('request'); //http请求模块
-const fs = require('fs'); //文件系统模块
-const path = require('path'); //文件路径模块
-const sha1 = require('node-sha1'); //加密模块
-const urlencode= require('urlencode'); //URL编译模块
-
-
-const hostName = '0.0.0.0'; //ip或域名
-const port = 8090; //端口
-
-const app = express()
-/**
- * [开启跨域便于接口访问]
- */
-app.all('*', function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*'); //访问控制允许来源：所有
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); //访问控制允许报头 X-Requested-With: xhr请求
-    res.header('Access-Control-Allow-Metheds', 'PUT, POST, GET, DELETE, OPTIONS'); //访问控制允许方法
-    res.header('X-Powered-By', 'nodejs'); //自定义头信息，表示服务端用nodejs
-    res.header('Content-Type', 'application/json;charset=utf-8');
-    next();
-});
-
-
-/**
- * [设置验证微信接口配置参数]
- */
-const config = {
-    token: 'test', //对应测试号接口配置信息里填的token
-    appid: 'xxxxxxxxxxxxxx', //对应测试号信息里的appID
-    secret: 'xxxxxxxxxxxxxxxxxxxx', //对应测试号信息里的appsecret
-    grant_type: 'client_credential' //默认
-};
-
-
-/**
- * [验证微信接口配置信息，]
- */
-app.get('/', function(req, res) {
-
-    const token = config.token; //获取配置的token
-    const signature = req.query.signature; //获取微信发送请求参数signature
-    const nonce = req.query.nonce; //获取微信发送请求参数nonce
-    const timestamp = req.query.timestamp; //获取微信发送请求参数timestamp
-
-    const str = [token, timestamp, nonce].sort().join(''); //排序token、timestamp、nonce后转换为组合字符串
-    const sha = sha1(str); //加密组合字符串
-
-    //如果加密组合结果等于微信的请求参数signature，验证通过
-    if (sha === signature) {
-        const echostr = req.query.echostr; //获取微信请求参数echostr
-        res.send(echostr + ''); //正常返回请求参数echostr
+var express = require('express');
+var crypto = require('crypto');  //引入加密模块
+var config = require('./config');//引入配置文件
+var http = require('http');
+ 
+var app = express();
+ 
+app.get('/wx', function (req, res) {
+ 
+    //1.获取微信服务器Get请求的参数 signature、timestamp、nonce、echostr
+    var signature = req.query.signature,//微信加密签名
+        timestamp = req.query.timestamp,//时间戳
+        nonce = req.query.nonce,//随机数
+        echostr = req.query.echostr;//随机字符串
+ 
+    //2.将token、timestamp、nonce三个参数进行字典序排序
+   
+    var array = [config.token, timestamp, nonce];
+    array.sort();
+ 
+    //3.将三个参数字符串拼接成一个字符串进行sha1加密
+    var tempStr = array.join('');
+    const hashCode = crypto.createHash('sha1'); //创建加密类型 
+    var resultCode = hashCode.update(tempStr, 'utf8').digest('hex'); //对传入的字符串进行加密
+    console.log(signature)
+    //4.开发者获得加密后的字符串可与signature对比，标识该请求来源于微信
+    if (resultCode === signature) {
+        res.send(echostr);
     } else {
-        res.send('验证失败');
+        res.send('mismatch');
     }
 });
-
-
-app.listen(port, hostName, function() {
-    console.log(`服务器运行在http://${hostName}:${port}`);
+ 
+ 
+var server = app.listen(3000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log('Example app listening at http://%s:%s', host, port);
 });
