@@ -1,21 +1,5 @@
-// {
-//     "presets": [
-//         "@babel/preset-env",
-//         "stage-3",
-//         "react"
-//     ],
-//     "plugins": [
-//         "transform-regenerator",
-//         "transform-class-properties",
-//         "@babel/plugin-transform-async-to-generator",
-//         ["import", { "libraryName": "antd-mobile", "style": "css" }] 
-//     ]
-// }
-
 module.exports = {
     presets: [
-        // "@babel/preset-env",
-
         [
             "@babel/preset-env",
             {
@@ -27,16 +11,21 @@ module.exports = {
             }
         ],
         "@babel/preset-react",
-        
-    ], // "@babel/preset-env"
+    ],
     plugins: [
-        //  "@babel/plugin-transform-modules-commonjs"
+        ["import", { "libraryName": "antd-mobile", "style": "css" }],
+        ["@babel/plugin-proposal-decorators",{
+            // decoratorsBeforeExport:true,
+            legacy: true,
+            loose: true
+        }],
+        "@babel/plugin-proposal-class-properties",
+    ],
+};
+
+    //  "@babel/plugin-transform-modules-commonjs"
     //     "@babel/plugin-transform-runtime",
     //     "@babel/plugin-transform-async-to-generator",
-    //     "@babel/plugin-proposal-class-properties",
+    //     
     //     "@babel/plugin-syntax-dynamic-import",
-    //     ["@babel/plugin-proposal-decorators",{decoratorsBeforeExport:true}],
-    //     ["import", { "libraryName": "antd-mobile", "style": "css" }],
-
-    ], // same as "@babel/plugin-transform-arrow-functions"
-};
+    //     ,

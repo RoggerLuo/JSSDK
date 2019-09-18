@@ -1,38 +1,88 @@
-import { Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import React from 'react'
+import wx from 'weixin-jsapi'
+import { List, Picker, Button, WhiteSpace, WingBlank } from 'antd-mobile'
+import { observable } from 'mobx'
+import { observer } from 'mobx-react'
+/* model定义 */
+const appState = observable({
+    timer: 0,
+    data:[
+        {name:'a'},
+        {name:'b'},
+        {name:'c'},
+    ],
+    pickerValue:1,
+    imgSrc:''
+})
+const words = [
+    {value:1,label:'词语1'},
+    {value:2,label:'词语2'},
+    {value:3,label:'词语3'},
+]
+function selectPhoto(){
+    return new Promise(resolve => {
+        wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+            sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+            success: function (res) {
+                resolve(res.localIds)
+                // var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            }
+        })
+    })    
+}
+// function getLocalImg(localID){
+//     return new Promise(resolve => {
+//         wx.getLocalImgData({
+//             localId: localID, // 图片的localID
+//             success: function (res) {
+//                 var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+//                 resolve(localData)
 
-const ButtonExample = () => (
-  <WingBlank>
-    <Button>default</Button><WhiteSpace />
-    <Button disabled>default disabled</Button><WhiteSpace />
+//             }
+//         });
+//     })
+// }
+async function upload(){
+    const localIds = await selectPhoto()
+    // const src = await getLocalImg(localIds[0])
+    appState.imgSrc = localIds[0]
 
-    <Button type="primary">primary</Button><WhiteSpace />
-    <Button type="primary" disabled>primary disabled</Button><WhiteSpace />
-
-    <Button type="warning">warning</Button><WhiteSpace />
-    <Button type="warning" disabled>warning disabled</Button><WhiteSpace />
-
-    <Button loading>loading button</Button><WhiteSpace />
-    <Button icon="check-circle-o">with icon</Button><WhiteSpace />
-    <Button icon={<img src="https://gw.alipayobjects.com/zos/rmsportal/jBfVSpDwPbitsABtDDlB.svg" alt="" />}>with custom icon</Button><WhiteSpace />
-    <Button icon="check-circle-o" inline size="small" style={{ marginRight: '4px' }}>with icon and inline</Button>
-    <Button icon="check-circle-o" inline size="small">with icon and inline</Button>
-    <WhiteSpace />
-
-    {/* <Button activeStyle={false}>无点击反馈</Button><WhiteSpace /> */}
-    {/* <Button activeStyle={{ backgroundColor: 'red' }}>custom feedback style</Button><WhiteSpace /> */}
-
-    <WhiteSpace />
-    <Button type="primary" inline style={{ marginRight: '4px' }}>inline primary</Button>
-    {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
-    <Button type="ghost" inline style={{ marginRight: '4px' }} className="am-button-borderfix">inline ghost</Button>
-
-    <WhiteSpace />
-    <Button type="primary" inline size="small" style={{ marginRight: '4px' }}>primary</Button>
-    <Button type="primary" inline size="small" disabled>primary disabled</Button>
-    <WhiteSpace />
-    <Button type="ghost" inline size="small" style={{ marginRight: '4px' }}>ghost</Button>
-    {/* use `am-button-borderfix`. because Multiple buttons inline arranged, the last one border-right may not display */}
-    <Button type="ghost" inline size="small" className="am-button-borderfix" disabled>ghost disabled</Button>
-  </WingBlank>
-);
+}
+@observer
+class ButtonExample extends React.Component {
+    render() {
+        return (
+            <div style={{height:'100%'}}>
+                <div style={{height:'0%'}}></div>
+                <WingBlank>
+                <WhiteSpace />
+                <WhiteSpace />
+                <Button type="primary" onClick={upload}>上传照片</Button><WhiteSpace />
+                <WhiteSpace />
+                <List style={{ backgroundColor: 'white' }} className="picker-list">
+                    <Picker
+                        title="选择词语"
+                        extra="请选择"
+                        data={words}
+                        value={appState.pickerValue}
+                        onChange={v => {
+                            console.log(v)
+                            appState.pickerValue = v 
+                        }}
+                        onOk={v => {
+                            console.log(v)
+                            appState.pickerValue = v 
+                        }}
+                    >
+                        <List.Item arrow="horizontal">选择词语</List.Item>
+                    </Picker>
+                </List>
+                <img src={appState.imgSrc}/>
+                </WingBlank>
+            </div>
+        )
+    }
+}
 export default ButtonExample

@@ -6,9 +6,7 @@ html, body {
   word-break: break-all;
   -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
+#root {
+    height: 100%;
 
-.tips {
-  text-align: center;
-  padding-top: 30px;
-  color: rgb(203, 203, 203);
 }

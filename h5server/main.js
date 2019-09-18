@@ -153,13 +153,18 @@ function getAccessToken(openid) {
 
 
 
- 
 app.get('/getsign', function (req, res) {
-    var url = "http://0.0.0.0:8080/"
+    
+    
+    // var url = "http://0.0.0.0:8080/"
+    // var url = "http://0.0.0.0:8080/"
+    var url = 'http://' + req.hostname + req.url;
+
     console.log(url)
     var noncestr = "123456",
         timestamp = Math.floor(Date.now() / 1000), //精确到秒
         jsapi_ticket;
+
     if (cache.get('ticket')) {
         jsapi_ticket = cache.get('ticket');
         // console.log('1' + 'jsapi_ticket=' + jsapi_ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);
