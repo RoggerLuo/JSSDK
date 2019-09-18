@@ -46,21 +46,21 @@ function dev(basic, projectName) {
     basic.plugins = [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: `${projectRoot}/src/pages/index.html`,
+            template: `${projectRoot}/src/index.html`,
             inject: true
         }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new CopyWebpackPlugin([
-            { 
-                from: `${projectRoot}/src/templates/`, // f7的模版需要文件夹后不要写*，4.0可能被deprecated了
-                to: './'
-            },
-            {
-                from: `${projectRoot}/src/assets/`, 
-                to: './assets/'
-            }
-        ])
+        // new CopyWebpackPlugin([
+        //     { 
+        //         from: `${projectRoot}/src/templates/`, // f7的模版需要文件夹后不要写*，4.0可能被deprecated了
+        //         to: './'
+        //     },
+        //     {
+        //         from: `${projectRoot}/src/assets/`, 
+        //         to: './assets/'
+        //     }
+        // ])
     ]
     basic.optimization = {
         splitChunks: {

@@ -25,20 +25,29 @@ module.exports = {
     module: {
         rules: [
             {
-                test(input){
-                    if(input.indexOf('dvax') !== -1) {
-                        return true
-                    }
-                    if(input.indexOf('antd-mobile') !== -1) {
-                        return true
-                    }
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader"
+                }
+            },
+            // {
+            //     test: /\.(js|jsx)/,
+            //     exclude: /(node_modules)/,
+                // test(input){
+                //     if(input.indexOf('dvax') !== -1) {
+                //         return true
+                //     }
+                //     if(input.indexOf('antd-mobile') !== -1) {
+                //         return true
+                //     }
 
-                    if(input.indexOf('node_modules') !== -1) {
-                        return false                        
-                    }
-                    return true
-                },
-                loader: 'babel-loader',
+                //     if(input.indexOf('node_modules') !== -1) {
+                //         return false                        
+                //     }
+                //     return true
+                // },
+                // loader: 'babel-loader',
                 // options: {
                 //     "presets": [
                 //             "env", 
@@ -51,7 +60,7 @@ module.exports = {
                 //             ["import", { "libraryName": "antd-mobile", "style": "css" }] 
                 //         ]
                 // }
-            },
+            // },
             // {
             //     test(input){
             //         if(input.indexOf('antd') !== -1) {

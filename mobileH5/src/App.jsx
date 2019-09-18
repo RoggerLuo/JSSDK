@@ -35,4 +35,4 @@ const ButtonExample = () => (
     <Button type="ghost" inline size="small" className="am-button-borderfix" disabled>ghost disabled</Button>
   </WingBlank>
 );
-ReactDOM.render(<ButtonExample />, mountNode);
+export default ButtonExample

@@ -1,15 +1,15 @@
 // import 'whatwg-fetch'
 // import "regenerator-runtime/runtime"
 // import 'es6-promise/auto'
-import React from 'react'
-import ReactDOM from 'react-dom'
 
+
+import ReactDOM from 'react-dom'
 import wx from 'weixin-jsapi'
 import Example from "./App";
 
 ReactDOM.render(
     <Example />,
-    document.getElementById("example")
+    document.getElementById("root")
 );
 
 async function wechat_auth ()  {

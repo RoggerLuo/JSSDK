@@ -12,28 +12,31 @@
 //     ]
 // }
 
-/* 
-   require("@babel/plugin-syntax-dynamic-import"),
-          [require("@babel/plugin-proposal-decorators"), { "legacy": true }],
-          [require("@babel/plugin-proposal-class-properties"), { "loose": false }], */
 module.exports = {
     presets: [
+        // "@babel/preset-env",
+
         [
             "@babel/preset-env",
             {
-                "useBuiltIns": "entry",
-                "modules": false
+                "targets": {
+                    "browsers": "> 5%",
+                    // "esmodules": true
+                },
+                // "useBuiltIns": "entry",
             }
         ],
         "@babel/preset-react",
         
     ], // "@babel/preset-env"
     plugins: [
-        "@babel/plugin-transform-async-to-generator",
-        "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-syntax-dynamic-import",
-        ["@babel/plugin-proposal-decorators",{decoratorsBeforeExport:true}],
-        ["import", { "libraryName": "antd-mobile", "style": "css" }],
+        //  "@babel/plugin-transform-modules-commonjs"
+    //     "@babel/plugin-transform-runtime",
+    //     "@babel/plugin-transform-async-to-generator",
+    //     "@babel/plugin-proposal-class-properties",
+    //     "@babel/plugin-syntax-dynamic-import",
+    //     ["@babel/plugin-proposal-decorators",{decoratorsBeforeExport:true}],
+    //     ["import", { "libraryName": "antd-mobile", "style": "css" }],
 
     ], // same as "@babel/plugin-transform-arrow-functions"
 };
