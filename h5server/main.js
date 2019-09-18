@@ -194,6 +194,7 @@ app.get('/getsign', async function  (req, res)  {
 app.get('/getImg', async function  (req, res)  {
     const id = req.query.id; //获取微信发送请求参数signature
     const access_token = await getToken()        
+    console.log('access_token是',access_token)
     console.log('id是',id)
     var src = `https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${id}`
     

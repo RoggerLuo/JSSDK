@@ -69,7 +69,11 @@ async function upload(){
     appState.imgSrc = src
     const serverId = await uploadToWechat(localIds[0])
     alert(serverId)
+
+    const res = await fetch(`http://106.54.113.111:8091/getImg?id=${serverId}`)
+    debugger
 }
+
 @observer
 class ButtonExample extends React.Component {
     render() {
