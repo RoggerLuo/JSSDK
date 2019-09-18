@@ -16,7 +16,8 @@
     "mobx": "^5.13.0",
     "mobx-react": "^6.1.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "weixin-jsapi": "^1.1.0"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
