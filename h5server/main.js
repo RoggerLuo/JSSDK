@@ -172,7 +172,7 @@ app.get('/getsign', async function  (req, res)  {
         //     if (!error && response.statusCode == 200) {
         //         var tokenMap = JSON.parse(body);
         request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + access_token + '&type=jsapi', function (error, resp, json) {
-            if (!error && response.statusCode == 200) {
+            if (!error && resp.statusCode == 200) {
                 var ticketMap = JSON.parse(json);
                 cache.put('ticket', ticketMap.ticket, (1000 * 60 * 60 * 24));  //加入缓存
                 // console.log('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);
