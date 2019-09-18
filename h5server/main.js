@@ -126,8 +126,22 @@ function applyToken(){
         })
     })
 }
+async function getToken(){
+    let access_token
 
-app.get('/getsign', function async (req, res)  {
+    if (cache.get('access_token')) {
+        access_token = cache.get('access_token')
+        console.log('get from cache',access_token)
+
+    }else{
+        tokenMap = await applyToken()
+        cache.put('access_token', tokenMap.access_token, (1000 * 60 * 59 * 2 ));  //加入缓存
+        access_token = tokenMap.access_token
+        console.log('get from online application',access_token)
+    }
+    return access_token
+}
+app.get('/getsign', async function  (req, res)  {
     
     
     // var url = "http://0.0.0.0:8080/"
@@ -153,12 +167,11 @@ app.get('/getsign', function async (req, res)  {
         };
         res.send(obj)
     } else {
-        const tokenMap = await applyToken()
-        console.log(tokenMap)
+        let access_token = getToken()        
         // request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
         //     if (!error && response.statusCode == 200) {
         //         var tokenMap = JSON.parse(body);
-        request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + tokenMap.access_token + '&type=jsapi', function (error, resp, json) {
+        request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + access_token + '&type=jsapi', function (error, resp, json) {
             if (!error && response.statusCode == 200) {
                 var ticketMap = JSON.parse(json);
                 cache.put('ticket', ticketMap.ticket, (1000 * 60 * 60 * 24));  //加入缓存
