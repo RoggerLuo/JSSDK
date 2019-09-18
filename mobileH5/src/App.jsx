@@ -1,10 +1,10 @@
 import React from 'react'
-import wx from 'weixin-jsapi'
+// import wx from 'weixin-jsapi'
 import { List, Picker, Button, WhiteSpace, WingBlank } from 'antd-mobile'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
-/* model定义 */
-const appState = observable({
+import isIphone from './isIphone'
+const appState = observable({ /* model定义 */
     timer: 0,
     data:[
         {name:'a'},
@@ -32,23 +32,43 @@ function selectPhoto(){
         })
     })    
 }
-// function getLocalImg(localID){
-//     return new Promise(resolve => {
-//         wx.getLocalImgData({
-//             localId: localID, // 图片的localID
-//             success: function (res) {
-//                 var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
-//                 resolve(localData)
-
-//             }
-//         });
-//     })
-// }
+function getLocalImg(localID){
+    return new Promise(resolve => {
+        wx.getLocalImgData({
+            localId: localID, // 图片的localID
+            success: function (res) {
+                var localData = res.localData; // localData是图片的base64数据，可以用img标签显示
+                resolve(localData)
+            }
+        })
+    })
+}
+function uploadToWechat(localID){
+    return new Promise(resolve => {
+        wx.uploadImage({
+            localId: localID, // 需要上传的图片的本地ID，由chooseImage接口获得
+            isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+                var serverId = res.serverId; // 返回图片的服务器端ID
+                resolve(serverId)
+            }
+        })
+        //   备注：上传图片有效期3天，可用微信多媒体接口下载图片到自己的服务器，此处获得的 serverId 即 media_id。
+    })
+}
+  
+  
 async function upload(){
     const localIds = await selectPhoto()
-    // const src = await getLocalImg(localIds[0])
-    appState.imgSrc = localIds[0]
-
+    let src
+    if(isIphone()) { // ios8以后iphone需要特殊处理
+        src = await getLocalImg(localIds[0])
+    }else{
+        src = localIds[0]
+    }
+    appState.imgSrc = src
+    const serverId = await uploadToWechat(localIds[0])
+    alert(serverId)
 }
 @observer
 class ButtonExample extends React.Component {
@@ -67,22 +87,18 @@ class ButtonExample extends React.Component {
                         extra="请选择"
                         data={words}
                         value={appState.pickerValue}
-                        onChange={v => {
-                            console.log(v)
-                            appState.pickerValue = v 
-                        }}
-                        onOk={v => {
-                            console.log(v)
-                            appState.pickerValue = v 
-                        }}
+                        onChange={v => appState.pickerValue = v }
+                        onOk={v => appState.pickerValue = v }
                     >
                         <List.Item arrow="horizontal">选择词语</List.Item>
                     </Picker>
                 </List>
-                <img src={appState.imgSrc}/>
+                <WhiteSpace />
+                <img src={appState.imgSrc} style={{maxWidth: '100%'}}/>
                 </WingBlank>
             </div>
         )
     }
 }
 export default ButtonExample
+

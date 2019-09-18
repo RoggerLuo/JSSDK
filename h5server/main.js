@@ -58,42 +58,6 @@ app.get('/', function(req, res) {
     }
 });
 
-/**
- * [创建请求微信网页授权接口链接]
- */
-
-app.get('/authentication', function(req, res) {
-
-    const appid = config.appid;
-    const redirect_uri = urlencode("http://www.xxx.net/code"); //这里的url需要转为加密格式，它的作用是访问微信网页鉴权接口成功后微信会回调这个地址，并把code参数带在回调地址中
-    const scope = 'snsapi_userinfo';
-    const url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope}&state=STATE&connect_redirect=1#wechat_redirect`;
-
-    const html =
-    `<!DOCTYPE html>
-    <html>
-        <head>
-        <meta charset="utf-8" >
-        <title>微信鉴权引导</title>
-        </head>
-        <body><a href="${url}">跳转到鉴权页面</a></body>
-    </html>`;
-
-    res.setHeader('Content-Type', 'text/html');
-    res.send(html);
-});
-
-/**
- * 网页授权回调接口，可以获取code
- */
-
-app.get('/code', function(req, res) {
-
-    const code = req.query.code; //微信回调这个接口后会把code参数带过来
-    getOpenId(code); //把code传入getOpenId方法
-
-});
-
 
 /**
  * 获取openid
@@ -152,13 +116,26 @@ function getAccessToken(openid) {
 //   });
 
 
+function applyToken(){
+    return new Promise(resolve => {
+        request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var tokenMap = JSON.parse(body);
+                resolve(tokenMap)
+            }
+        })
+    })
+}
 
-app.get('/getsign', function (req, res) {
+app.get('/getsign', function async (req, res)  {
     
     
     // var url = "http://0.0.0.0:8080/"
     // var url = "http://0.0.0.0:8080/"
     var url = 'http://192.168.1.114:8080/'
+
+
+
     console.log(url)
     var noncestr = "123456",
         timestamp = Math.floor(Date.now() / 1000), //精确到秒
@@ -176,26 +153,28 @@ app.get('/getsign', function (req, res) {
         };
         res.send(obj)
     } else {
-        request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
+        const tokenMap = await applyToken()
+        console.log(tokenMap)
+        // request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
+        //     if (!error && response.statusCode == 200) {
+        //         var tokenMap = JSON.parse(body);
+        request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + tokenMap.access_token + '&type=jsapi', function (error, resp, json) {
             if (!error && response.statusCode == 200) {
-                var tokenMap = JSON.parse(body);
-                request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + tokenMap.access_token + '&type=jsapi', function (error, resp, json) {
-                    if (!error && response.statusCode == 200) {
-                        var ticketMap = JSON.parse(json);
-                        cache.put('ticket', ticketMap.ticket, (1000 * 60 * 60 * 24));  //加入缓存
-                        // console.log('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);
-                        obj = {
-                            noncestr: noncestr,
-                            timestamp: timestamp,
-                            url: url,
-                            jsapi_ticket: ticketMap.ticket,
-                            signature: sha1('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url)
-                        }
-                        res.send(obj)
-                    }
-                })
+                var ticketMap = JSON.parse(json);
+                cache.put('ticket', ticketMap.ticket, (1000 * 60 * 60 * 24));  //加入缓存
+                // console.log('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);
+                obj = {
+                    noncestr: noncestr,
+                    timestamp: timestamp,
+                    url: url,
+                    jsapi_ticket: ticketMap.ticket,
+                    signature: sha1('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url)
+                }
+                res.send(obj)
             }
         })
+            // }
+        // })
     }
 });
 
