@@ -149,7 +149,6 @@ app.get('/getsign', async function  (req, res)  {
     var url = 'http://192.168.1.114:8080/'
 
 
-
     console.log(url)
     var noncestr = "123456",
         timestamp = Math.floor(Date.now() / 1000), //精确到秒
@@ -167,7 +166,7 @@ app.get('/getsign', async function  (req, res)  {
         };
         res.send(obj)
     } else {
-        let access_token = getToken()        
+        let access_token = await getToken()        
         // request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
         //     if (!error && response.statusCode == 200) {
         //         var tokenMap = JSON.parse(body);
@@ -192,7 +191,27 @@ app.get('/getsign', async function  (req, res)  {
 });
 
 
+app.get('/getImg', async function  (req, res)  {
+    const id = req.query.id; //获取微信发送请求参数signature
+    const access_token = await getToken()        
 
+    var src = `https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${id}`
+    
+    var writeStream = fs.createWriteStream('id.png');
+    var readStream = request(src)
+    readStream.pipe(writeStream);
+    readStream.on('end', function() {
+        console.log('文件下载成功');
+    });
+    readStream.on('error', function() {
+        console.log("错误信息:" + err)
+    })
+    writeStream.on("finish", function() {
+        console.log("文件写入成功");
+        writeStream.end();
+    });
+
+})
 
 app.listen(port, hostName, function() {
     console.log(`服务器运行在http://${hostName}:${port}`);
