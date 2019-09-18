@@ -158,7 +158,7 @@ app.get('/getsign', function (req, res) {
     
     // var url = "http://0.0.0.0:8080/"
     // var url = "http://0.0.0.0:8080/"
-    var url = 'http://192.168.1.114:8080'
+    var url = 'http://192.168.1.114:8080/'
     console.log(url)
     var noncestr = "123456",
         timestamp = Math.floor(Date.now() / 1000), //精确到秒
