@@ -121,6 +121,10 @@ app.get('/getImg', async function  (req, res)  {
     });
 })
 
+app.use('/images', express.static('images')) 
+// app.use('/catcher.js', express.static(path.join(__dirname, '../catcher/bug_catcher.js')));
+// app.use('/server.md', express.static(path.join(__dirname, '../server.md')));
+
 app.listen(port, hostName, function() {
     console.log(`服务器运行在http://${hostName}:${port}`);
 });
