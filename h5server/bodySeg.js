@@ -18,7 +18,8 @@ var fs = require('fs');
 //     // 如果发生网络错误
 //     console.log(err);
 // });
-exports.modules = function(mediaId) {
+
+const seg = (mediaId) => {
     return new Promise(resolve => {
         var image = fs.readFileSync(`images/${mediaId}.png`).toString("base64");
         // 如果有可选参数
@@ -41,3 +42,5 @@ exports.modules = function(mediaId) {
         });
     })
 }
+
+exports.modules = seg
