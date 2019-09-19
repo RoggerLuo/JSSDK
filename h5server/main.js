@@ -9,6 +9,10 @@ const bodySeg = require('./bodySeg.js')
 const hostName = '0.0.0.0'; //ip或域名
 const port = 8091; //端口
 const app = express()
+
+app.use('/images', express.static('images')) 
+app.use('/static', express.static('../mobileH5/dist')) 
+
 /**
  * [开启跨域便于接口访问]
  */
@@ -121,8 +125,6 @@ app.get('/getImg', async function  (req, res)  {
     });
 })
 
-app.use('/images', express.static('images')) 
-app.use('/static', express.static('../mobileH5/dist')) 
 
 // app.use('/catcher.js', express.static(path.join(__dirname, '../catcher/bug_catcher.js')));
 // app.use('/server.md', express.static(path.join(__dirname, '../server.md')));
