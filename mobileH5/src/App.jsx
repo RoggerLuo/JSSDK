@@ -74,7 +74,7 @@ async function upload(){
         return response.json();
     })
     console.log(res)
-    
+    alert(res)
 }
 
 @observer

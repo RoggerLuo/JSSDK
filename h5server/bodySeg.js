@@ -34,7 +34,7 @@ const bodySeg = (mediaId) => {
                     console.log(err)
                 }else{
                     console.log('保存成功')
-                    resolve('ok')
+                    resolve(`images/seg_${mediaId}.png`)
                 }
             });
         }).catch(function(err) {

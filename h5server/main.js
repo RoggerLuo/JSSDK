@@ -116,7 +116,7 @@ app.get('/getImg', async function  (req, res)  {
         writeStream.end();
 
         bodySeg(id).then(function(val){
-            res.send({result:'ok'})
+            res.send({result:val})
         })
     });
 })
