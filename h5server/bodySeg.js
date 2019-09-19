@@ -43,4 +43,4 @@ const bodySeg = (mediaId) => {
     })
 }
 
-exports.modules = {bodySeg}
+module.exports = bodySeg
