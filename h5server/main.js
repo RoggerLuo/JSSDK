@@ -62,7 +62,8 @@ app.get('/getsign', async function  (req, res)  {
     /* 需要修改url */
     // var url = "http://0.0.0.0:8080/"
     // var url = "http://0.0.0.0:8080/"
-    var url = 'http://192.168.1.114:8080/'
+    // var url = 'http://192.168.1.114:8080/'
+    var url = 'http://106.54.113.111:8091/static/index.html'
 
     console.log(url)
     var noncestr = "123456",
