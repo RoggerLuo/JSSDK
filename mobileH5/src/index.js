@@ -19,7 +19,7 @@ async function wechat_auth ()  {
         })
     console.log(res)
     wx.config({
-        // debug: true, // 开启调试模式
+        debug: true, // 开启调试模式
         appId: "wxc0f44270eeb7045a", // 必填，公众号的唯一标识
         timestamp: res.timestamp, // 必填，生成签名的时间戳
         nonceStr: res.noncestr, // 必填，生成签名的随机串
