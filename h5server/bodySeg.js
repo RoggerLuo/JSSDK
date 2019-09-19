@@ -19,7 +19,7 @@ var fs = require('fs');
 //     console.log(err);
 // });
 
-const seg = (mediaId) => {
+const bodySeg = (mediaId) => {
     return new Promise(resolve => {
         var image = fs.readFileSync(`images/${mediaId}.png`).toString("base64");
         // 如果有可选参数
@@ -43,4 +43,4 @@ const seg = (mediaId) => {
     })
 }
 
-exports.modules = seg
+exports.modules = {bodySeg}
