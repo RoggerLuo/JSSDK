@@ -10,20 +10,18 @@ const hostName = '0.0.0.0'; //ip或域名
 const port = 8091; //端口
 const app = express()
 
-app.use('/images', express.static('images')) 
-app.use('/static', express.static('../mobileH5/dist')) 
 
 /**
  * [开启跨域便于接口访问]
  */
-app.all('*', function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*'); //访问控制允许来源：所有
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); //访问控制允许报头 X-Requested-With: xhr请求
-    res.header('Access-Control-Allow-Metheds', 'PUT, POST, GET, DELETE, OPTIONS'); //访问控制允许方法
-    res.header('X-Powered-By', 'nodejs'); //自定义头信息，表示服务端用nodejs
-    res.header('Content-Type', 'application/json;charset=utf-8');
-    next();
-});
+// app.all('*', function(req, res, next) {
+//     res.header('Access-Control-Allow-Origin', '*'); //访问控制允许来源：所有
+//     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); //访问控制允许报头 X-Requested-With: xhr请求
+//     res.header('Access-Control-Allow-Metheds', 'PUT, POST, GET, DELETE, OPTIONS'); //访问控制允许方法
+//     res.header('X-Powered-By', 'nodejs'); //自定义头信息，表示服务端用nodejs
+//     res.header('Content-Type', 'application/json;charset=utf-8');
+//     next();
+// });
 
 /**
  * [设置验证微信接口配置参数]
@@ -125,6 +123,9 @@ app.get('/getImg', async function  (req, res)  {
     });
 })
 
+
+app.use('/images', express.static('images')) 
+app.use('/static', express.static('../mobileH5/dist')) 
 
 // app.use('/catcher.js', express.static(path.join(__dirname, '../catcher/bug_catcher.js')));
 // app.use('/server.md', express.static(path.join(__dirname, '../server.md')));
