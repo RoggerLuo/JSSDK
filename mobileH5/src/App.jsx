@@ -1,18 +1,14 @@
 import React from 'react'
 // import wx from 'weixin-jsapi'
-import { List, Picker, Button, WhiteSpace, WingBlank } from 'antd-mobile'
+import { ActivityIndicator, List, Picker, Button, WhiteSpace, WingBlank } from 'antd-mobile'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import isIphone from './isIphone'
 const appState = observable({ /* model定义 */
-    timer: 0,
-    data:[
-        {name:'a'},
-        {name:'b'},
-        {name:'c'},
-    ],
     pickerValue:1,
-    imgSrc:''
+    imgSrc:'',
+    imgSrc2:'',
+    animating: false
 })
 const words = [
     {value:1,label:'词语1'},
@@ -56,8 +52,7 @@ function uploadToWechat(localID){
         //   备注：上传图片有效期3天，可用微信多媒体接口下载图片到自己的服务器，此处获得的 serverId 即 media_id。
     })
 }
-  
-  
+
 async function upload(){
     const localIds = await selectPhoto()
     let src
@@ -68,13 +63,19 @@ async function upload(){
     }
     appState.imgSrc = src
     const serverId = await uploadToWechat(localIds[0])
-
+    appState.animating = true
     const res = await fetch(`http://106.54.113.111:8091/getImg?id=${serverId}`)
     .then(function(response) {
         return response.json();
     })
     console.log(res)
-    alert(res.result)
+    // alert(res.result)
+    appState.animating = false
+    appState.imgSrc2 = `http://106.54.113.111:8091/${res.result}`
+    appState.imgSrc = ""
+
+    // setTimeout(()=>appState.imgSrc = `http://106.54.113.111:8091/${res.result}`,500)
+    // alert(appState.imgSrc)
 }
 
 @observer
@@ -102,8 +103,13 @@ class ButtonExample extends React.Component {
                 </List>
                 <WhiteSpace />
                 <WhiteSpace />
+                <img src={appState.imgSrc2} style={{maxWidth: '100%'}}/>
 
-                <img src={appState.imgSrc} style={{maxWidth: '100%'}}/>
+                {appState.imgSrc?<img src={appState.imgSrc} style={{maxWidth: '100%'}}/>:null}
+                <WhiteSpace />
+                <WhiteSpace />
+
+                <ActivityIndicator toast text="正在抠图" animating={appState.animating}/>
                 </WingBlank>
             </div>
         )

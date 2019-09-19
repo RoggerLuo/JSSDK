@@ -3,7 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const projectRoot = path.resolve(__dirname, '../')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 function product(basic){
@@ -76,11 +76,11 @@ function product(basic){
                     name: 'reactDom',
                     test: /react-dom/, 
                 },
-                vendor2: {
-                    chunks: 'all',
-                    name: 'f7',
-                    test: /framework7/, 
-                }
+                // vendor2: {
+                //     chunks: 'all',
+                //     name: 'f7',
+                //     test: /framework7/, 
+                // }
             }
         }
     }
@@ -88,23 +88,23 @@ function product(basic){
         new webpack.DefinePlugin({
           'TEST_MODE': JSON.stringify(false)
         }),
-        new CleanWebpackPlugin(['dist'],{ root: projectRoot }),
+        new CleanWebpackPlugin(), //,{ root: projectRoot }
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: `${projectRoot}/src/pages/index.html`,
+            template: `${projectRoot}/src/index.html`,
             inject: true
         }),
         new ExtractTextPlugin('style.[chunkhash].css', { allChunks: true }),
-        new CopyWebpackPlugin([
-            { 
-                from: `${projectRoot}/src/templates/`, // f7的模版需要文件夹后不要写*，4.0可能被deprecated了
-                to: './'
-            },
-            {
-                from: `${projectRoot}/src/assets/`, 
-                to: './assets/'
-            }
-        ])
+        // new CopyWebpackPlugin([
+        //     { 
+        //         from: `${projectRoot}/src/templates/`, // f7的模版需要文件夹后不要写*，4.0可能被deprecated了
+        //         to: './'
+        //     },
+        //     {
+        //         from: `${projectRoot}/src/assets/`, 
+        //         to: './assets/'
+        //     }
+        // ])
     ]
     return basic
 }

@@ -122,6 +122,8 @@ app.get('/getImg', async function  (req, res)  {
 })
 
 app.use('/images', express.static('images')) 
+app.use('/static', express.static('../mobileH5/dist')) 
+
 // app.use('/catcher.js', express.static(path.join(__dirname, '../catcher/bug_catcher.js')));
 // app.use('/server.md', express.static(path.join(__dirname, '../server.md')));
 

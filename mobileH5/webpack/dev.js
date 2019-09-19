@@ -70,11 +70,11 @@ function dev(basic, projectName) {
                     name: 'reactDom',
                     test: /react-dom/, 
                 },
-                vendor2: {
-                    chunks: 'all',
-                    name: 'f7',
-                    test: /framework7/, 
-                }
+                // vendor2: {
+                //     chunks: 'all',
+                //     name: 'f7',
+                //     test: /framework7/, 
+                // }
             }
         }
     }
