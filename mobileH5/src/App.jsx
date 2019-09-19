@@ -68,10 +68,13 @@ async function upload(){
     }
     appState.imgSrc = src
     const serverId = await uploadToWechat(localIds[0])
-    alert(serverId)
 
     const res = await fetch(`http://106.54.113.111:8091/getImg?id=${serverId}`)
-    debugger
+    .then(function(response) {
+        return response.json();
+    })
+    console.log(res)
+    
 }
 
 @observer
@@ -98,6 +101,8 @@ class ButtonExample extends React.Component {
                     </Picker>
                 </List>
                 <WhiteSpace />
+                <WhiteSpace />
+
                 <img src={appState.imgSrc} style={{maxWidth: '100%'}}/>
                 </WingBlank>
             </div>

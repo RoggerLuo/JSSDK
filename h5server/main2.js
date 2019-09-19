@@ -37,3 +37,64 @@ var server = app.listen(3000, function () {
     var port = server.address().port;
     console.log('Example app listening at http://%s:%s', host, port);
 });
+
+
+
+/**
+ * 获取openid
+ * @param  { string } code [调用获取openid的接口需要code参数]
+ */
+function getOpenId(code) {
+    const appid = config.appid;
+    const secret = config.secret;
+
+    const url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`;
+
+    request(url, function(error, response, body) {
+
+        if (!error && response.statusCode == 200) {
+           const openid =  body.openid;
+           getAccessToken(openid);   //获取openid成功后调用getAccessToken
+        }
+
+    });
+}
+
+
+/**
+ * 获取access_token
+ *  @param  { string } openid [发送模板消息的接口需要用到openid参数]
+ */
+function getAccessToken(openid) {
+    const appid = config.appid;
+    const secret = config.secret;
+    const grant_type = config.grant_type;
+
+    const url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=${grant_type}&appid=${appid}&secret=${secret}`;
+
+    request(url, function(error, response, body) {
+
+        if (!error && response.statusCode == 200) {
+
+            const access_token= JSON.parse(body).access_token;
+            sendTemplateMsg(openid, access_token); //获取access_token成功后调用发送模板消息的方法
+
+        } else {
+            throw 'update access_token error';
+        }
+    });
+
+
+}
+
+
+
+// const getJsApiData = require('./getJsApiData.js')
+
+// app.get('/auth', function (req, res) {
+//     var clientUrl = 'http://' + req.hostname + req.url;
+//     getJsApiData(clientUrl).then(data => {
+//       res.render('base.html', {signature: data[0], timestamp: data[1], nonceStr: data[2], appId: config.appId});
+//     });
+//   });
+

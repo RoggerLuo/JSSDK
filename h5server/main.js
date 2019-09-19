@@ -4,13 +4,10 @@ const fs = require('fs'); //文件系统模块
 const path = require('path'); //文件路径模块
 const sha1 = require('node-sha1'); //加密模块
 const urlencode= require('urlencode'); //URL编译模块
-
 var cache = require('memory-cache')
-
-
+const bodySeg = require('./bodySeg')
 const hostName = '0.0.0.0'; //ip或域名
 const port = 8091; //端口
-
 const app = express()
 /**
  * [开启跨域便于接口访问]
@@ -23,7 +20,6 @@ app.all('*', function(req, res, next) {
     res.header('Content-Type', 'application/json;charset=utf-8');
     next();
 });
-
 
 /**
  * [设置验证微信接口配置参数]
@@ -40,7 +36,6 @@ const config = {
  * [验证微信接口配置信息，]
  */
 app.get('/', function(req, res) {
-
     const token = config.token; //获取配置的token
     const signature = req.query.signature; //获取微信发送请求参数signature
     const nonce = req.query.nonce; //获取微信发送请求参数nonce
@@ -59,95 +54,12 @@ app.get('/', function(req, res) {
 });
 
 
-/**
- * 获取openid
- * @param  { string } code [调用获取openid的接口需要code参数]
- */
-function getOpenId(code) {
-    const appid = config.appid;
-    const secret = config.secret;
-
-    const url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${appid}&secret=${secret}&code=${code}&grant_type=authorization_code`;
-
-    request(url, function(error, response, body) {
-
-        if (!error && response.statusCode == 200) {
-           const openid =  body.openid;
-           getAccessToken(openid);   //获取openid成功后调用getAccessToken
-        }
-
-    });
-}
-
-
-/**
- * 获取access_token
- *  @param  { string } openid [发送模板消息的接口需要用到openid参数]
- */
-function getAccessToken(openid) {
-    const appid = config.appid;
-    const secret = config.secret;
-    const grant_type = config.grant_type;
-
-    const url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=${grant_type}&appid=${appid}&secret=${secret}`;
-
-    request(url, function(error, response, body) {
-
-        if (!error && response.statusCode == 200) {
-
-            const access_token= JSON.parse(body).access_token;
-            sendTemplateMsg(openid, access_token); //获取access_token成功后调用发送模板消息的方法
-
-        } else {
-            throw 'update access_token error';
-        }
-    });
-
-
-}
-
-// const getJsApiData = require('./getJsApiData.js')
-
-// app.get('/auth', function (req, res) {
-//     var clientUrl = 'http://' + req.hostname + req.url;
-//     getJsApiData(clientUrl).then(data => {
-//       res.render('base.html', {signature: data[0], timestamp: data[1], nonceStr: data[2], appId: config.appId});
-//     });
-//   });
-
-
-function applyToken(){
-    return new Promise(resolve => {
-        request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var tokenMap = JSON.parse(body);
-                resolve(tokenMap)
-            }
-        })
-    })
-}
-async function getToken(){
-    let access_token
-
-    if (cache.get('access_token')) {
-        access_token = cache.get('access_token')
-        console.log('get from cache',access_token)
-
-    }else{
-        tokenMap = await applyToken()
-        cache.put('access_token', tokenMap.access_token, (1000 * 60 * 59 * 2 ));  //加入缓存
-        access_token = tokenMap.access_token
-        console.log('get from online application',access_token)
-    }
-    return access_token
-}
 app.get('/getsign', async function  (req, res)  {
     
-    
+    /* 需要修改url */
     // var url = "http://0.0.0.0:8080/"
     // var url = "http://0.0.0.0:8080/"
     var url = 'http://192.168.1.114:8080/'
-
 
     console.log(url)
     var noncestr = "123456",
@@ -167,26 +79,18 @@ app.get('/getsign', async function  (req, res)  {
         res.send(obj)
     } else {
         let access_token = await getToken()        
-        // request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
-        //     if (!error && response.statusCode == 200) {
-        //         var tokenMap = JSON.parse(body);
-        request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + access_token + '&type=jsapi', function (error, resp, json) {
-            if (!error && resp.statusCode == 200) {
-                var ticketMap = JSON.parse(json);
-                cache.put('ticket', ticketMap.ticket, (1000 * 60 * 60 * 24));  //加入缓存
-                // console.log('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);
-                obj = {
-                    noncestr: noncestr,
-                    timestamp: timestamp,
-                    url: url,
-                    jsapi_ticket: ticketMap.ticket,
-                    signature: sha1('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url)
-                }
-                res.send(obj)
-            }
-        })
-            // }
-        // })
+
+        let ticketMap = await applyTickets()
+        cache.put('ticket', ticketMap.ticket, (1000 * 60 * 60 * 24));  //加入缓存
+        // console.log('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url);
+        obj = {
+            noncestr: noncestr,
+            timestamp: timestamp,
+            url: url,
+            jsapi_ticket: ticketMap.ticket,
+            signature: sha1('jsapi_ticket=' + ticketMap.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url)
+        }
+        res.send(obj)
     }
 });
 
@@ -210,11 +114,53 @@ app.get('/getImg', async function  (req, res)  {
     writeStream.on("finish", function() {
         console.log("文件写入成功");
         writeStream.end();
-    });
-    res.send('ok')
 
+        bodySeg(id).then(function(val){
+            res.send({result:'ok'})
+        })
+    });
 })
 
 app.listen(port, hostName, function() {
     console.log(`服务器运行在http://${hostName}:${port}`);
 });
+
+
+function applyToken(){
+    return new Promise(resolve => {
+        request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${config.appid}&secret=${config.secret}`, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var tokenMap = JSON.parse(body);
+                resolve(tokenMap)
+            }
+        })
+    })
+}
+function applyTickets(){
+    return new Promise(resolve => {
+        request('https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + access_token + '&type=jsapi', function (error, resp, json) {
+            if (!error && resp.statusCode == 200) {
+                var ticketMap = JSON.parse(json);
+                resolve(ticketMap)
+
+            }
+        })
+    })
+}
+
+async function getToken(){
+    let access_token
+
+    if (cache.get('access_token')) {
+        access_token = cache.get('access_token')
+        console.log('get from cache',access_token)
+
+    }else{
+        tokenMap = await applyToken()
+        cache.put('access_token', tokenMap.access_token, (1000 * 60 * 59 * 2 ));  //加入缓存
+        access_token = tokenMap.access_token
+        console.log('get from online application',access_token)
+    }
+    return access_token
+}
+
