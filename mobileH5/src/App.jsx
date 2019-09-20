@@ -4,6 +4,50 @@ import { ActivityIndicator, List, Picker, Button, WhiteSpace, WingBlank } from '
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import isIphone from './isIphone'
+import html2canvas from 'html2canvas'
+let saveFile = function(data, fileName){
+    let save_link = document.createElement('a');
+    save_link.href = data;
+    save_link.download = fileName;
+
+    let event = document.createEvent('MouseEvents');
+    event.initEvent("click", true, false);
+    save_link.dispatchEvent(event);
+};
+function imgType(ty) {
+    let type = ty.toLowerCase().replace(/jpg/i, 'jpeg');
+    var r = type.match(/png|jpeg|bmp|gif/)[0];
+    return 'image/' + r;
+}
+// Converts canvas to an image
+function convertCanvasToImage(canvas) {
+	var image = new Image();
+    image.src = canvas.toDataURL("image/png");
+    image.style.position = 'absolute'
+    image.style.top = '0px'
+	return image;
+}
+function download(cans) {
+    // let cans=document.getElementById("myCanvas");
+    let type = 'png';   //设置下载图片的格式
+
+    let img_png_src = cans.toDataURL("image/png");  //将canvas保存为图片
+
+    let imgData = img_png_src.replace(imgType(type),'image/octet-stream');
+
+    let filename = '图片' + '.' + type; //下载图片的文件名
+    saveFile(imgData,filename);
+}
+
+function capture(){
+    html2canvas(document.body).then(function(canvas) {
+        // document.body.appendChild(canvas);
+        // download(canvas)
+        const imageDom = convertCanvasToImage(canvas)
+        document.body.appendChild(imageDom);
+
+    });
+}
 const appState = observable({ /* model定义 */
     pickerValue:1,
     imgSrc:'',
@@ -101,6 +145,8 @@ class ButtonExample extends React.Component {
                         <List.Item arrow="horizontal">选择词语</List.Item>
                     </Picker>
                 </List>
+                <Button type="primary" onClick={capture}>截图</Button><WhiteSpace />
+
                 <WhiteSpace />
                 <WhiteSpace />
                 <img src={appState.imgSrc2} style={{maxWidth: '100%'}}/>
