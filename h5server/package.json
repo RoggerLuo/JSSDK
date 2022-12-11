@@ -16,7 +16,7 @@
     "cookie-parser": "^1.4.3",
     "decompress": "^4.2.0",
     "errorhandler": "^1.4.3",
-    "express": "^4.14.0",
+    "express": "^4.17.3",
     "express-session": "^1.14.0",
     "extract-zip": "^1.6.5",
     "http-proxy": "^1.17.0",
